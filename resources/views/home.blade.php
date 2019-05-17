@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -15,6 +15,8 @@
                     @endif
 
                     You are logged in!
+
+                    <a href="{{route('ads.create')}}">Submit Ad</a>
                 </div>
             </div>
         </div>

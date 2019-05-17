@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUnit extends Migration
+class AddLevelToCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateUnit extends Migration
      */
     public function up()
     {
-        Schema::create('unit', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('slug'); //web-developer
-            $table->string('name'); //Web Developer
-            $table->text('description');
-            $table->timestamps();
+        Schema::table('categories', function (Blueprint $table) {
+            $table->integer( 'level' );
         });
     }
 
@@ -29,6 +25,8 @@ class CreateUnit extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unit');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('level');
+        });
     }
 }

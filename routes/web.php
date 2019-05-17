@@ -27,4 +27,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/towns', 'MainController');
+Route::resource('/ads', 'AdsubmissionController');
