@@ -13,6 +13,10 @@ class BusinessMeanType extends Model
     {
         return $this->belongsToMany('App\Models\Category','business_mean_categories')->where('category_parent_id',0);
     }
+    public function product_general_categories()
+    {
+        return $this->belongsToMany('App\Models\Category','business_mean_categories');
+    }
     public function main_categories()
     {
         return $this->belongsToMany('App\Models\Category','business_mean_categories')->where('level',1);

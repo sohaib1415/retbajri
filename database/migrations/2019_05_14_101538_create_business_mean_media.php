@@ -15,6 +15,8 @@ class CreateBusinessMeanMedia extends Migration
     {
         Schema::create('business_mean_media', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('mediable_id');
+            $table->string('mediable_type');
             $table->bigInteger('business_mean_id')->unsigned()->index();
             $table->bigInteger('media_id')->unsigned()->index();
             $table->foreign('business_mean_id')->references('id')->on('business_means');

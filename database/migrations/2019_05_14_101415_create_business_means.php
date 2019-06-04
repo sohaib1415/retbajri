@@ -16,11 +16,13 @@ class CreateBusinessMeans extends Migration
         Schema::create('business_means', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('brand');
-            $table->text('description');
             $table->integer('price');
-            $table->integer('minimum_quatity');
+            $table->string('brand', 50)->nullable();
+            $table->string('description', 50)->nullable();
+            $table->string('minimum_quatity', 50)->nullable();
             $table->integer('status')->default(1);
+            $table->integer('is_featured')->default(0);
+            $table->integer('cod')->default(0);
             $table->bigInteger('city_id')->unsigned()->index();
             $table->foreign('city_id')->references('id')->on('cities');
             $table->bigInteger('user_id')->unsigned()->index();

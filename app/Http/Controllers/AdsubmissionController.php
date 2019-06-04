@@ -39,7 +39,10 @@ class AdsubmissionController extends Controller
     public function create()
     {
         $user               = auth()->user();
-        $user_details       = UserDetail::where('user_id',$user->id)->first();
+        if(auth()->user())
+            $user_details       = UserDetail::where('user_id',$user->id)->first();
+        else
+            $user_details       = "";
         $business_means     = new BusinessMean();
         $business_means_type= BusinessMeanType::all();
         //$userDetails = UserDetails::where('user_id', $user_id)->first();
@@ -56,7 +59,7 @@ class AdsubmissionController extends Controller
     {
         //dd($request);
         $validator = Validator::make($request->all(),[
-            'name'=>'string|required',
+            "title_".$request->data =>'string|required',
             'description'=>'string'
         ]);
 
