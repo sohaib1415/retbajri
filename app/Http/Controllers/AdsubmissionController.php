@@ -129,8 +129,10 @@ class AdsubmissionController extends Controller
                     $media =    Media::find($media_modal->id)->first();
                     //dd($media);
                     $b_m_media=new BusinessMeanMedia([
-                        'media_id'=>$media_modal->id,
-                        'business_mean_id'=>$business_mean->id
+                        'media_id'          =>  $media_modal->id,
+                        'business_mean_id'  =>  $business_mean->id,
+                        'mediable_id'       =>  $business_mean->id,
+                        'mediable_type'     =>  'App\Models\BusinessMean',
                     ]);
                     $b_m_media->save();
                     DB::commit();

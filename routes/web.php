@@ -59,5 +59,8 @@ Route::get('/my-ads', 'HomeController@ads')->name('user.ads');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 Route::resource('/ads', 'AdsubmissionController');
+
+Route::get('/product-detail', function () {
+    return view('pages/product-detail');
+})->name('product-detail');

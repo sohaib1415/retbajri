@@ -206,7 +206,7 @@
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis lobortis</p>
                                     </div>
                                     <!--end description-->
-                                    <a href="single-listing-1.html" class="detail text-caps underline">Detail</a>
+                                    <a href="{{route('product-detail')}}" class="detail text-caps underline">Detail</a>
                                 </div>
                             </div>
                             <!--end item-->

@@ -43,6 +43,8 @@ DROP TABLE IF EXISTS `business_mean_media`;
 
 CREATE TABLE `business_mean_media` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `mediable_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mediable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `business_mean_id` bigint(20) unsigned NOT NULL,
   `media_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -52,11 +54,9 @@ CREATE TABLE `business_mean_media` (
   KEY `business_mean_media_media_id_index` (`media_id`),
   CONSTRAINT `business_mean_media_business_mean_id_foreign` FOREIGN KEY (`business_mean_id`) REFERENCES `business_means` (`id`),
   CONSTRAINT `business_mean_media_media_id_foreign` FOREIGN KEY (`media_id`) REFERENCES `media` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `business_mean_media` */
-
-insert  into `business_mean_media`(`id`,`business_mean_id`,`media_id`,`created_at`,`updated_at`) values (6,21,11,'2019-05-17 11:09:48','2019-05-17 11:09:48'),(7,21,12,'2019-05-17 11:09:49','2019-05-17 11:09:49'),(8,22,13,'2019-05-17 11:29:49','2019-05-17 11:29:49'),(9,22,14,'2019-05-17 11:29:49','2019-05-17 11:29:49'),(10,22,15,'2019-05-17 11:29:49','2019-05-17 11:29:49'),(11,23,16,'2019-05-17 11:32:55','2019-05-17 11:32:55'),(12,23,17,'2019-05-17 11:32:55','2019-05-17 11:32:55'),(13,24,18,'2019-05-17 11:34:17','2019-05-17 11:34:17'),(14,25,19,'2019-05-17 11:36:04','2019-05-17 11:36:04'),(15,26,20,'2019-05-17 11:38:31','2019-05-17 11:38:31'),(16,27,21,'2019-05-17 11:41:26','2019-05-17 11:41:26'),(17,30,22,'2019-05-17 11:45:04','2019-05-17 11:45:04'),(18,30,23,'2019-05-17 11:45:04','2019-05-17 11:45:04');
 
 /*Table structure for table `business_mean_types` */
 
@@ -84,11 +84,13 @@ DROP TABLE IF EXISTS `business_means`;
 CREATE TABLE `business_means` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
   `brand` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` int(11) NOT NULL,
   `minimum_quatity` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
+  `is_featured` int(11) NOT NULL DEFAULT '0',
+  `cod` int(11) NOT NULL DEFAULT '0',
   `city_id` bigint(20) unsigned NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
   `business_mean_category_id` bigint(20) unsigned NOT NULL,
@@ -101,11 +103,9 @@ CREATE TABLE `business_means` (
   CONSTRAINT `business_means_business_mean_category_id_foreign` FOREIGN KEY (`business_mean_category_id`) REFERENCES `business_mean_categories` (`id`),
   CONSTRAINT `business_means_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
   CONSTRAINT `business_means_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `business_means` */
-
-insert  into `business_means`(`id`,`name`,`brand`,`description`,`price`,`minimum_quatity`,`status`,`city_id`,`user_id`,`business_mean_category_id`,`created_at`,`updated_at`) values (3,'white cement specific',NULL,NULL,100,NULL,1,31289,1,1,'2019-05-17 10:44:14','2019-05-17 10:44:14'),(4,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:46:47','2019-05-17 10:46:47'),(5,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:47:46','2019-05-17 10:47:46'),(6,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:51:18','2019-05-17 10:51:18'),(7,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:51:59','2019-05-17 10:51:59'),(8,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:52:20','2019-05-17 10:52:20'),(9,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:52:49','2019-05-17 10:52:49'),(10,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:53:42','2019-05-17 10:53:42'),(11,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:56:18','2019-05-17 10:56:18'),(12,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 10:58:52','2019-05-17 10:58:52'),(13,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:00:45','2019-05-17 11:00:45'),(14,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:02:04','2019-05-17 11:02:04'),(15,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:02:17','2019-05-17 11:02:17'),(16,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:03:07','2019-05-17 11:03:07'),(17,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:04:24','2019-05-17 11:04:24'),(18,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:06:32','2019-05-17 11:06:32'),(19,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:08:02','2019-05-17 11:08:02'),(20,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:09:01','2019-05-17 11:09:01'),(21,'asdsadwhite cement specific',NULL,NULL,100,NULL,1,31594,1,1,'2019-05-17 11:09:48','2019-05-17 11:09:48'),(22,'white cement specific',NULL,NULL,10011,NULL,1,31292,1,3,'2019-05-17 11:29:48','2019-05-17 11:29:48'),(23,'asdas',NULL,NULL,1,NULL,1,31274,1,10,'2019-05-17 11:32:55','2019-05-17 11:32:55'),(24,'white cement specific',NULL,NULL,10011,NULL,1,31273,1,1,'2019-05-17 11:34:17','2019-05-17 11:34:17'),(25,'white cement specific',NULL,NULL,100,NULL,1,31273,1,1,'2019-05-17 11:36:04','2019-05-17 11:36:04'),(26,'white cement specific',NULL,NULL,100,NULL,1,31273,1,1,'2019-05-17 11:38:31','2019-05-17 11:38:31'),(27,'white cement specific',NULL,NULL,100,NULL,1,31273,1,1,'2019-05-17 11:41:26','2019-05-17 11:41:26'),(28,'asdsadasd',NULL,NULL,100,NULL,1,31273,1,1,'2019-05-17 11:42:20','2019-05-17 11:42:20'),(29,'asdsadasd',NULL,NULL,100,NULL,1,31273,1,1,'2019-05-17 11:44:32','2019-05-17 11:44:32'),(30,'asdsadasd',NULL,NULL,100,NULL,1,31273,1,1,'2019-05-17 11:45:03','2019-05-17 11:45:03');
 
 /*Table structure for table `business_means_units` */
 
@@ -220,11 +220,11 @@ CREATE TABLE `media` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `media` */
 
-insert  into `media`(`id`,`title`,`slug`,`file_type`,`filename`,`status`,`deleted_at`,`created_at`,`updated_at`,`path`) values (9,'1558091282console.php','1558091282console.php','php','1558091282console.php',1,NULL,'2019-05-17 11:08:02','2019-05-17 11:08:02','assets/products/Products'),(10,'1558091341console.php','1558091341console.php','php','1558091341console.php',1,NULL,'2019-05-17 11:09:01','2019-05-17 11:09:01','assets/products/Products'),(11,'1558091388console.php','1558091388console.php','php','1558091388console.php',1,NULL,'2019-05-17 11:09:48','2019-05-17 11:09:48','assets/products/Products'),(12,'1558091388web.php','1558091388web.php','php','1558091388web.php',1,NULL,'2019-05-17 11:09:48','2019-05-17 11:09:48','assets/products/Products'),(13,'15580925891543090705handtekening test (1).png','15580925891543090705handtekening test (1).png','png','15580925891543090705handtekening test (1).png',1,NULL,'2019-05-17 11:29:49','2019-05-17 11:29:49','assets/products/Products'),(14,'15580925891543996206card16_20170705_063738.jpeg','15580925891543996206card16_20170705_063738.jpeg','jpeg','15580925891543996206card16_20170705_063738.jpeg',1,NULL,'2019-05-17 11:29:49','2019-05-17 11:29:49','assets/products/Products'),(15,'15580925891553625495sohaib-small.jpg','15580925891553625495sohaib-small.jpg','jpg','15580925891553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:29:49','2019-05-17 11:29:49','assets/products/Products'),(16,'155809277538ammar faridi.JPG','155809277538ammar faridi.JPG','JPG','155809277538ammar faridi.JPG',1,NULL,'2019-05-17 11:32:55','2019-05-17 11:32:55','assets/Services/maincategory_2'),(17,'15580927751543779700Capture.PNG','15580927751543779700Capture.PNG','PNG','15580927751543779700Capture.PNG',1,NULL,'2019-05-17 11:32:55','2019-05-17 11:32:55','assets/Services/maincategory_2'),(18,'15580928571553625495sohaib-small.jpg','15580928571553625495sohaib-small.jpg','jpg','15580928571553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:34:17','2019-05-17 11:34:17','assets/Products/maincategory_1'),(19,'15580929641543090687handtekening test (1).png','15580929641543090687handtekening test (1).png','png','15580929641543090687handtekening test (1).png',1,NULL,'2019-05-17 11:36:04','2019-05-17 11:36:04','assets/Products/23'),(20,'15580931111553625495sohaib-small.jpg','15580931111553625495sohaib-small.jpg','jpg','15580931111553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:38:31','2019-05-17 11:38:31','assets/Products/23'),(21,'15580932861553625495sohaib-small.jpg','15580932861553625495sohaib-small.jpg','jpg','15580932861553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:41:26','2019-05-17 11:41:26','assets/Products/'),(22,'155809350438ammar faridi.JPG','155809350438ammar faridi.JPG','JPG','155809350438ammar faridi.JPG',1,NULL,'2019-05-17 11:45:04','2019-05-17 11:45:04','assets/Products/Cement'),(23,'15580935041553625495sohaib-small.jpg','15580935041553625495sohaib-small.jpg','jpg','15580935041553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:45:04','2019-05-17 11:45:04','assets/Products/Cement');
+insert  into `media`(`id`,`title`,`slug`,`file_type`,`filename`,`status`,`deleted_at`,`created_at`,`updated_at`,`path`) values (9,'1558091282console.php','1558091282console.php','php','1558091282console.php',1,NULL,'2019-05-17 11:08:02','2019-05-17 11:08:02','assets/products/Products'),(10,'1558091341console.php','1558091341console.php','php','1558091341console.php',1,NULL,'2019-05-17 11:09:01','2019-05-17 11:09:01','assets/products/Products'),(11,'1558091388console.php','1558091388console.php','php','1558091388console.php',1,NULL,'2019-05-17 11:09:48','2019-05-17 11:09:48','assets/products/Products'),(12,'1558091388web.php','1558091388web.php','php','1558091388web.php',1,NULL,'2019-05-17 11:09:48','2019-05-17 11:09:48','assets/products/Products'),(13,'15580925891543090705handtekening test (1).png','15580925891543090705handtekening test (1).png','png','15580925891543090705handtekening test (1).png',1,NULL,'2019-05-17 11:29:49','2019-05-17 11:29:49','assets/products/Products'),(14,'15580925891543996206card16_20170705_063738.jpeg','15580925891543996206card16_20170705_063738.jpeg','jpeg','15580925891543996206card16_20170705_063738.jpeg',1,NULL,'2019-05-17 11:29:49','2019-05-17 11:29:49','assets/products/Products'),(15,'15580925891553625495sohaib-small.jpg','15580925891553625495sohaib-small.jpg','jpg','15580925891553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:29:49','2019-05-17 11:29:49','assets/products/Products'),(16,'155809277538ammar faridi.JPG','155809277538ammar faridi.JPG','JPG','155809277538ammar faridi.JPG',1,NULL,'2019-05-17 11:32:55','2019-05-17 11:32:55','assets/Services/maincategory_2'),(17,'15580927751543779700Capture.PNG','15580927751543779700Capture.PNG','PNG','15580927751543779700Capture.PNG',1,NULL,'2019-05-17 11:32:55','2019-05-17 11:32:55','assets/Services/maincategory_2'),(18,'15580928571553625495sohaib-small.jpg','15580928571553625495sohaib-small.jpg','jpg','15580928571553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:34:17','2019-05-17 11:34:17','assets/Products/maincategory_1'),(19,'15580929641543090687handtekening test (1).png','15580929641543090687handtekening test (1).png','png','15580929641543090687handtekening test (1).png',1,NULL,'2019-05-17 11:36:04','2019-05-17 11:36:04','assets/Products/23'),(20,'15580931111553625495sohaib-small.jpg','15580931111553625495sohaib-small.jpg','jpg','15580931111553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:38:31','2019-05-17 11:38:31','assets/Products/23'),(21,'15580932861553625495sohaib-small.jpg','15580932861553625495sohaib-small.jpg','jpg','15580932861553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:41:26','2019-05-17 11:41:26','assets/Products/'),(22,'155809350438ammar faridi.JPG','155809350438ammar faridi.JPG','JPG','155809350438ammar faridi.JPG',1,NULL,'2019-05-17 11:45:04','2019-05-17 11:45:04','assets/Products/Cement'),(23,'15580935041553625495sohaib-small.jpg','15580935041553625495sohaib-small.jpg','jpg','15580935041553625495sohaib-small.jpg',1,NULL,'2019-05-17 11:45:04','2019-05-17 11:45:04','assets/Products/Cement'),(24,'15583536431543090687handtekening test (1).png','15583536431543090687handtekening test (1).png','png','15583536431543090687handtekening test (1).png',1,NULL,'2019-05-20 12:00:43','2019-05-20 12:00:43','assets/Products/RetBajri'),(25,'15583536431543779700Capture.PNG','15583536431543779700Capture.PNG','PNG','15583536431543779700Capture.PNG',1,NULL,'2019-05-20 12:00:43','2019-05-20 12:00:43','assets/Products/RetBajri');
 
 /*Table structure for table `migrations` */
 
@@ -235,11 +235,11 @@ CREATE TABLE `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
 
-insert  into `migrations`(`id`,`migration`,`batch`) values (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_01_07_084155_create_faqs_table',1),(5,'2019_05_10_202356_create_media_table',1),(7,'2019_05_11_162410_create_roles_table',2),(8,'2019_05_11_202512_create_user_role_table',2),(10,'2019_05_12_152757_create_countries',2),(11,'2019_05_12_152829_create_states',2),(12,'2019_05_12_152900_create_cities',2),(19,'2019_05_12_175321_create_user_details',6),(22,'2019_05_12_101815_create_units',8),(37,'2019_05_14_102735_create_rating_types',12),(43,'2019_05_14_101200_create_business_mean_types',13),(44,'2019_05_14_101201_create_category_table',13),(45,'2019_05_14_101315_create_business_mean_categories',13),(46,'2019_05_14_101415_create_business_means',13),(47,'2019_05_14_101538_create_business_mean_media',13),(48,'2019_05_14_101804_create_business_means_units_table',13),(49,'2019_05_14_102808_create_reviews',13),(50,'2019_05_14_102857_create_ratings',13),(52,'2019_05_15_114558_add_level_to_categories',14),(53,'2019_05_16_101434_add_path_to_media',15),(55,'2019_05_16_170309_make_nullable_to_business_mean',16),(56,'2019_05_17_104909_remove_extra_columns_to_media',17);
+insert  into `migrations`(`id`,`migration`,`batch`) values (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2019_01_07_084155_create_faqs_table',1),(5,'2019_05_10_202356_create_media_table',1),(7,'2019_05_11_162410_create_roles_table',2),(8,'2019_05_11_202512_create_user_role_table',2),(10,'2019_05_12_152757_create_countries',2),(11,'2019_05_12_152829_create_states',2),(12,'2019_05_12_152900_create_cities',2),(19,'2019_05_12_175321_create_user_details',6),(22,'2019_05_12_101815_create_units',8),(37,'2019_05_14_102735_create_rating_types',12),(43,'2019_05_14_101200_create_business_mean_types',13),(44,'2019_05_14_101201_create_category_table',13),(45,'2019_05_14_101315_create_business_mean_categories',13),(52,'2019_05_15_114558_add_level_to_categories',14),(53,'2019_05_16_101434_add_path_to_media',15),(55,'2019_05_16_170309_make_nullable_to_business_mean',16),(56,'2019_05_17_104909_remove_extra_columns_to_media',17),(62,'2019_05_14_101415_create_business_means',18),(63,'2019_05_14_101538_create_business_mean_media',18),(64,'2019_05_14_101804_create_business_means_units_table',18),(65,'2019_05_14_102808_create_reviews',18),(66,'2019_05_14_102857_create_ratings',18);
 
 /*Table structure for table `password_resets` */
 
@@ -253,6 +253,8 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `password_resets` */
+
+insert  into `password_resets`(`email`,`token`,`created_at`) values ('sohaib1415@gmail.com','$2y$10$DHrYXKrTNEYPTGthBmxZsudaMbjfTybs3YlHzUEsF7LuIASq00jYm','2019-05-29 12:05:26');
 
 /*Table structure for table `rating_types` */
 
@@ -421,11 +423,11 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`status`,`created_at`,`updated_at`) values (1,'Sohaib Danish','sohaib1415@gmail.com',NULL,'$2y$10$PRNHvTO6XJYItKUzurEWh.K8kSwItkEosbabzNUaxKFm.azfPFaJO',NULL,0,'2019-05-13 10:02:26','2019-05-13 10:02:26');
+insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`status`,`created_at`,`updated_at`) values (1,'Sohaib Danish','sohaib1415@gmail.com',NULL,'$2y$10$PRNHvTO6XJYItKUzurEWh.K8kSwItkEosbabzNUaxKFm.azfPFaJO','mkeexKwXTEUT9IwzGxhyesfuDkKK2xDGZ9MTRQ5LluuhQtvnR8Ks9zcJihnA',0,'2019-05-13 10:02:26','2019-05-13 10:02:26'),(2,'Test','test@gmail.com',NULL,'$2y$10$a5pd7bbipDNQ/r45kSUMVeZUTsRUQprtHRLz3V78CWFxlAiryZsZy',NULL,0,'2019-05-29 11:04:00','2019-05-29 11:04:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
