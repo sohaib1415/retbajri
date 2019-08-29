@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+   //     $this->middleware('auth');
     }
 
     /**
@@ -32,44 +32,32 @@ class HomeController extends Controller
      */
     public function welcome()
     {
-        $b_m_categories= BusinessMeanType::find(1)->first();
-     //   $b_m_categories= BusinessMeanCategory::where('business_mean_type_id',1)
-     //   ->with('categories_1')
-     //   ->with('product_categories_1')
-    //    ->get();
-
-     /*   $b_m_maincategories = Category::has('product_categories_1')->with(['product_categories_1' => function($query){
-            $query->where('leval',1); //you may use any condition here or manual select operation
-            $query->select(); //select operation
-        }])
-        ->get();
-
-        $user = App\Models\Category::find(1)->product_categories;
-        dd($user);
-        */
-        return view('welcome',compact('b_m_categories','b_m_maincategories'));
+        if(auth()->user() || (!auth()->user()))
+        $b_m_categories= BusinessMeanType::find(1)
+        ->with('business_means_cat')
+        ->with('business_means_cat.product_list')
+        ->with('business_means_cat.featured_product_list')
+        ->with('business_means_cat.product_list.product_user')
+        ->with('business_means_cat.featured_product_list.product_user')
+        ->first();
+        //  dd($b_m_categories);
+        $featured_prod= BusinessMeanType::find(1)
+        ->with('business_means_cat')
+        ->with('business_means_cat.featured_product_list')
+        ->with('business_means_cat.featured_product_list.product_user')
+        ->first();
+        return view('welcome',compact('b_m_categories','b_m_maincategories','featured_prod'));
     }
 
     public function index()
     {
-        return view('home');
+        return redirect()->route('user.profile');
+        //return view('home');
     }
-    public function profile()
+
+    public function emailSend(Request $request)
     {
-        $user               = auth()->user();
-        if(auth()->user())
-            $user_details       = UserDetail::where('user_id',$user->id)->first();
-        else
-            $user_details       = "";
-        return view('user\profile',compact('user','user_details'));
+        return view('pages.email');
     }
-    public function ads()
-    {
-        $user               = auth()->user();
-        if(auth()->user())
-            $user_details       = UserDetail::where('user_id',$user->id)->first();
-        else
-            $user_details       = "";
-        return view('user\ads',compact('user','user_details'));
-    }
+
 }

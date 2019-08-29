@@ -4,7 +4,8 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-        <li class="breadcrumb-item active"><a href="#">Blog Post Single</a></li>
+        <li class="breadcrumb-item"><a href="{{ url('search?category='.$item->business_categories->categories_1->id) }}">{{  $item->business_categories->categories_1->name }}</a></li>
+        <li class="breadcrumb-item active"><a href="#">{{  $item->name }}</a></li>
     </ol>
 @endsection
 
@@ -14,18 +15,18 @@
 @section('pageTitle')
     <div class="container clearfix">
         <div class="float-left float-xs-none">
-            <h1>Furniture For Sale
+            <h1>{{  $item->name }}
                 <span class="tag">Offer</span>
             </h1>
             <h4 class="location">
-                <a href="#">Manhattan, NY</a>
+                <a href="#">{!! $item->product_location['name'] !!}</a>
             </h4>
         </div>
         <div class="float-right float-xs-none price">
-            <div class="number">$80</div>
-            <div class="id opacity-50">
+            <div class="number">PKR {!! $item->price !!}</div>
+            {{-- <div class="id opacity-50">
                 <strong>ID: </strong>3479
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
@@ -34,13 +35,22 @@
 <section class="block">
     <!--Gallery Carousel-->
     <section>
+        {{-- {{ dd($item) }} --}}
         <div class="owl-carousel full-width-carousel">
-            <div class="item background-image"><img src="{{ asset('images/backgrounds/image-24.jpg')}}" alt="" data-hash="1"></div>
+                @if(count($item->medias))
+                @php $i=1 @endphp
+                @foreach($item->medias as $item_pic)
+
+                <img src="{{ asset('assets/products/').'/'.$item->business_categories->categories_1->name.'/'.$item_pic['title'] }}" alt="" data-hash="{{ $i }}">
+                @php $i++ @endphp
+                @endforeach
+            @endif
+            {{-- <div class="item background-image"><img src="{{ asset('images/backgrounds/image-24.jpg')}}" alt="" data-hash="1"></div>
             <div class="item background-image"><img src="{{ asset('images/backgrounds/image-26.jpg')}}" alt="" data-hash="2"></div>
             <div class="item background-image"><img src="{{ asset('images/backgrounds/image-22.jpg')}}" alt="" data-hash="4"></div>
             <div class="item background-image"><img src="{{ asset('images/backgrounds/image-23.jpg')}}" alt="" data-hash="5"></div>
             <div class="item background-image"><img src="{{ asset('images/backgrounds/image-20.jpg')}}" alt="" data-hash="6"></div>
-            <div class="item background-image"><img src="{{ asset('images/backgrounds/image-25.jpg')}}" alt="" data-hash="3"></div>
+            <div class="item background-image"><img src="{{ asset('images/backgrounds/image-25.jpg')}}" alt="" data-hash="3"></div> --}}
         </div>
     </section>
     <!--end Gallery Carousel-->
@@ -49,16 +59,14 @@
             <!--============ Listing Detail =============================================================-->
             <div class="col-md-8">
                 <!--Description-->
+                @if ($item->description)
                 <section>
                     <h2>Description</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec tincidunt arcu, sit
-                        amet fermentum sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-                        per inceptos himenaeos. Vestibulum tincidunt, sapien sagittis sollicitudin dapibus,
-                        risus mi euismod elit, in dictum justo lacus sit amet dui. Sed faucibus vitae nisl
-                        at dignissim.
+                        {{  $item->description }}
                     </p>
                 </section>
+                @endif
                 <!--end Description-->
                 <!--Details-->
                 <section>
@@ -86,10 +94,10 @@
                 </section>
                 <!--end Details-->
                 <!--Location-->
-                <section>
+                {{-- <section>
                     <h2>Location</h2>
                     <div class="map height-300px" id="map-small"></div>
-                </section>
+                </section> --}}
                 <!--end Location-->
                 <!--Features-->
                 <section>
@@ -106,7 +114,7 @@
 
                 <hr>
 
-                <!--Similar Ads-->
+                {{-- <!--Similar Ads-->
                 <section>
                     <h2>Similar Ads</h2>
                     <div class="items list compact">
@@ -245,7 +253,7 @@
                         </div>
                     </div>
                     <!--end items.list.compact-->
-                </section>
+                </section> --}}
                 <!--end Similar Ads-->
             </div>
             <!--============ End Listing Detail =========================================================-->
@@ -259,14 +267,15 @@
                             <div class="author">
                                 <div class="author-image">
                                     <div class="background-image">
-                                        <img src="{{ asset('images/backgrounds/author-01.jpg')}}" alt="">
+                                            <img src="@if($item->product_user->profile_pic){{ asset('assets/users/'.$item->product_user->profile_pic->title) }} @endif " alt="">
+                                        {{-- <img src="{{ asset('user/'.{{ $item->product_user['name'] }})}}" alt=""> --}}
                                     </div>
                                 </div>
                                 <!--end author-image-->
                                 <div class="author-description">
-                                    <h3>Jane Doe</h3>
+                                    <h3>{{ $item->product_user['name'] }}</h3>
                                     <div class="rating" data-rating="4"></div>
-                                    <a href="seller-detail-1.html" class="text-uppercase">Show My Listings
+                                    <a href="{{ url('user-profile', $item->product_user->id) }}" class="text-uppercase">Show My Listings
                                         <span class="appendix">(12)</span>
                                     </a>
                                 </div>
@@ -274,13 +283,13 @@
                             </div>
                             <hr>
                             <dl>
-                                <dt>Phone</dt>
-                                <dd>830-247-0930</dd>
+                                {{-- <dt>Phone</dt> --}}
+                                {{-- <dd>{{ $item->product_user->user_details['contact_no'] }}</dd> --}}
                                 <dt>Email</dt>
-                                <dd>hijane@example.com</dd>
+                                <dd>{{ $item->product_user['email'] }}</dd>
                             </dl>
                             <!--end author-->
-                            <form class="form email">
+                            {{-- <form class="form email">
                                 <div class="form-group">
                                     <label for="name" class="col-form-label">Name</label>
                                     <input name="name" type="text" class="form-control" id="name" placeholder="Your Name">
@@ -297,7 +306,7 @@
                                 </div>
                                 <!--end form-group-->
                                 <button type="submit" class="btn btn-primary">Send</button>
-                            </form>
+                            </form> --}}
                         </div>
                         <!--end box-->
                     </section>

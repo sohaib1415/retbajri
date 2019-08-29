@@ -23,6 +23,7 @@
         @if (Auth::check())
             <form class="form form-submi MultiFile-intercepted" method="POST" novalidate="novalidate" enctype="multipart/form-data" action="{{ route('ads.store') }}">
                 {{ csrf_field() }}
+
                 <section>
                     <h2>Basic Information</h2>
                     <div class="form-group" id="type">
@@ -41,9 +42,11 @@
                     </div>
 
                 </section>
+                {{ Form::hidden('business_mean_count', $business_means_type->count()) }}
                 @foreach ($business_means_type as $data)
+
                 <div class="b_type{{ $data->id }}">
-                        {{ Form::hidden('business_mean_type', $data->id) }}
+                    {{ Form::hidden('business_mean_type', $data->id) }}
                 <section>
                     <div class="row">
                         <div class="col-md-8">
@@ -122,6 +125,8 @@
                     <!--end row-->
                 </section>
 
+
+
                 <section>
                     <h2>Details</h2>
                     <div class="form-group">
@@ -170,9 +175,10 @@
                     <h2>Gallery</h2>
                     <div class="file-upload-previews"></div>
                     <div class="file-upload">
-                        <div class="MultiFile-wrap" id="MultiFile1">
-                            <input type="file" name="images_{{ $data->id }}[]" class="file-upload-input with-preview MultiFile-applied" multiple="" title="Click to add files" maxlength="10" accept="gif|jpg|png" id="MultiFile1" value=""></div>
+                        <div class="MultiFile-wrap" id="MultiFile">
+                            <input type="file" name="files_{{ $data->id }}[]" class="file-upload-input with-preview MultiFile-applie" multiple="" title="Click to add files" maxlength="10" accept="gif|jpg|png" id="MultiFile" value=""></div>
                             <span><i class="fa fa-plus-circle"></i>Click or drag images here</span>
+                        </div>
                     </div>
                 </section>
 
@@ -200,8 +206,19 @@
     @section('pageScript')
     <script src="{{ asset('js/jquery-validate.bootstrap-tooltip.min.js') }}"></script>
     <script src="{{ asset('js/jQuery.MultiFile.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
     <script type="text/javascript">
     $(document).ready(function() {
+        var count = $("input[name=business_mean_count]").val();
+      //  for(var c=1; c < count; c++)
+      //  {
+            if( $("input[type=file].with-preview").length ){
+            $("input.file-upload-input").MultiFile({
+                list: ".file-upload-previews"
+            });
+     //   }
+
+    }
         $('.b_type2').css('display','none');
         $('.b_type1').css('display','block');
         $('.b_m_type').on('click',function(){

@@ -56,3 +56,13 @@ if (!function_exists('get_product_categories')) {
         dd($categories);
     }
 }
+
+if (!function_exists('get_subcategories')) {
+    function get_subcategories($b_m_id)
+    {
+        $b_type = BusinessMeanType::where('id',$b_m_id)->first();
+        //dd($b_type);
+        //dd($b_type->sub_categories->pluck('name','id'));
+        return $b_type->name;
+    }
+}

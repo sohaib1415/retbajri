@@ -41,4 +41,26 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function user_city()
+    {
+        return $this->hasOne('App\Models\city','id');
+    }
+    public function user_details()
+    {
+        return $this->hasMany('App\Models\UserDetail');
+    }
+    public function user_products()
+    {
+        return $this->hasMany('App\Models\BusinessMean');
+    }
+
+    public function profile_pic()
+    {
+        return $this->morphOne('App\Models\Media', 'mediable');
+    }
+    public function medias()
+    {
+        return $this->morphMany('App\Models\Media', 'mediable');
+    }
 }

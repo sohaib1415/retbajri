@@ -26,6 +26,11 @@
             </div>
             <!--end col-md-3-->
             <div class="col-md-9">
+                    @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                    @endif
                 <form method="POST" action="{{ route('password.update') }}" class="form clearfix">
                     @csrf
 

@@ -17,11 +17,9 @@ class CreateUserDetails extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->bigInteger('media_id')->unsigned()->index();
-            $table->foreign('media_id')->references('id')->on('media');
-            $table->integer('contact_no');
-            $table->integer('web_url');
-            $table->string('address');
+            $table->string('contact_no');
+            $table->string('web_url');
+            $table->text('address');
             $table->timestamps();
         });
     }

@@ -10,8 +10,6 @@ use App\Models\BusinessMeanCategory;
 use App\Models\Media;
 use App\Models\UserDetail;
 
-use App\Http\Resources\Town\TownCollection;
-use App\Http\Resources\Town\TownResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +44,7 @@ class AdsubmissionController extends Controller
         $business_means     = new BusinessMean();
         $business_means_type= BusinessMeanType::all();
         //$userDetails = UserDetails::where('user_id', $user_id)->first();
-        return view('ads\create',compact('business_means','business_means_type','user','user_details'));
+        return view('ads.create',compact('business_means','business_means_type','user','user_details'));
     }
 
     /**
@@ -57,7 +55,7 @@ class AdsubmissionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+
         $validator = Validator::make($request->all(),[
             "title_".$request->data =>'string|required',
             'description'=>'string'
@@ -68,16 +66,16 @@ class AdsubmissionController extends Controller
         }
 
         try{
-            $cat_id =   "category_".$request->data;
+            $cat_id     =   "category_".$request->data;
             $maincat_id =   "maincategory_".$request->data;
-            $subcat_id =   "subcategory_".$request->data;
-            $city_id =   "city_".$request->data;
-            $name =   "title_".$request->data;
-            $desc =   "description_".$request->data;
-            $price =   "price_".$request->data;
-           // dd($request->$name);
+            $subcat_id  =   "subcategory_".$request->data;
+            $city_id    =   "city_".$request->data;
+            $name       =   "title_".$request->data;
+            $desc       =   "description_".$request->data;
+            $price      =   "price_".$request->data;
+            //dd($request->$desc);
             $business_means_type= BusinessMeanType::find($request->data);
-            $business_means_cat= BusinessMeanCategory::where('category_id',$request->$cat_id)->where('business_mean_type_id',$request->data)->first();
+            $business_means_cat= BusinessMeanCategory::where('category_id',$request->$maincat_id)->where('business_mean_type_id',$request->data)->first();
            // dd($business_means_cat);
             DB::beginTransaction();
             $business_mean  =   new BusinessMean([
@@ -94,6 +92,7 @@ class AdsubmissionController extends Controller
             $business_mean->save();
             DB::commit();
             //return redirect('home')->with('status', 'Town is successfully added!');
+
         }
         catch(\Exception $e){
             dd($e);
@@ -106,7 +105,8 @@ class AdsubmissionController extends Controller
             //dd($cat_name->name);
 
             $images=array();
-            if($files=$request->file('images_'.$request->data)){
+            if($files=$request->file('files_'.$request->data)){
+              //  dd($files);
                 foreach($files as $file){
                     $name=time().$file->getClientOriginalName();
                     $path   =   'assets/'.$business_means_type->name.'/'.$cat_name->name;
@@ -114,35 +114,25 @@ class AdsubmissionController extends Controller
                     $images[]=$name;
                     /*Insert your data*/
                     DB::beginTransaction();
-                   $media_modal  =   new Media([
-                        'title'=>$name,
-                        'slug'=>$name,
-                        'file_type'=>$file->getClientOriginalExtension(),
-                        'filename'=>$name,
-                       // 'type'=>'image',
-                        //'role'=>'user.photo',
-                        'path'=>$path,
+                   $media_modal     =   new Media([
+                        'title'         =>  $name,
+                        'slug'          =>  $name,
+                        'file_type'     =>  $file->getClientOriginalExtension(),
+                        'filename'      =>  $name,
+                        'mediable_id'   =>  $business_mean->id,
+                        'mediable_type' =>  'App\Models\BusinessMean',
+                        'path'          =>  $path,
                     ]);
                     $media_modal->save();
                     DB::commit();
-                    DB::beginTransaction();
-                    $media =    Media::find($media_modal->id)->first();
-                    //dd($media);
-                    $b_m_media=new BusinessMeanMedia([
-                        'media_id'          =>  $media_modal->id,
-                        'business_mean_id'  =>  $business_mean->id,
-                        'mediable_id'       =>  $business_mean->id,
-                        'mediable_type'     =>  'App\Models\BusinessMean',
-                    ]);
-                    $b_m_media->save();
-                    DB::commit();
+                  //  dd();
                 }
             }
             //DB::commit();
             return redirect('home')->with('status', 'Product is successfully added!');
         }
         catch(\Exception $e){
-            dd($e);
+
             DB::rollback();
             return response()->json($e,500);
         }

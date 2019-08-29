@@ -74,7 +74,7 @@ class MainController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Town  $town
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(Town $town)
@@ -85,30 +85,41 @@ class MainController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Town  $town
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Town $town)
+    public function profileEdit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('user.edit-profile',compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Town  $town
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Town $town)
+    public function update($id)
     {
-        //
+        //dd('grttt');
+
+        $player = User::findOrFail($id);
+
+        $player->name = request('name');
+        $player->sport = request('sport');
+        $player->country = request('country');
+
+        $player->save();
+
+        return redirect('/players');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Town  $town
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Town $town)

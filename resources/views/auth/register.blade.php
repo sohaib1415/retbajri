@@ -62,6 +62,11 @@
                             <label for="repeat_password" class="col-form-label required">{{ __('Confirm Password') }}</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Confirm Password') }}" required autocomplete="new-password">
                         </div>
+                        <div class="form-group">
+                                <label for="city" class="col-form-label required">City</label>
+                                {{ Form::select("city_id", get_cities(), null) }}
+                            </div>
+
                         <!--end form-group-->
                         <div class="d-flex justify-content-between align-items-baseline">
                             <label>

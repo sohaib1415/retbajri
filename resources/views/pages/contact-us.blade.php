@@ -21,6 +21,15 @@
 <section class="block">
     <div class="map height-500px" id="map-contact"></div>
     <div class="container">
+        @if (session('message'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert">
+                        {{ session('message') }}
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-4">
                 <h2>Get In Touch</h2>
@@ -51,7 +60,8 @@
             <!--end col-md-4-->
             <div class="col-md-8">
                 <h2>Contact Form</h2>
-                <form class="form email">
+                <form class="form email" action="{{ url('/contact-us') }}" method="POST">
+                        {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
